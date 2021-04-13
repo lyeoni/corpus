@@ -12,8 +12,12 @@ class CorpusSpokenKo(Corpus):
         super().__init__(name)
         self.root = root
         self.complete_conversation = complete_conversation
+        
+        if not self.root:
+            raise ValueError('Set the corpus directory path to `root`')
 
-        self.corpus = self.load(root)
+
+        self.corpus = self.load(self.root)
     
     def load(self, root):
         file_paths = sorted(list(Path(root).glob('*.json')))

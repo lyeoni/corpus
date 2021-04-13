@@ -1,1 +1,2 @@
+from .corpus_written_ko import CorpusWrittenKo
 from .corpus_spoken_ko import CorpusSpokenKo
