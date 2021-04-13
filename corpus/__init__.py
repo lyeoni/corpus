@@ -1,0 +1,1 @@
+from .corpus_spoken_ko import CorpusSpokenKo

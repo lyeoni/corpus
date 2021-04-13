@@ -1,25 +1,23 @@
 import json
 from pathlib import Path
 
-class CorpusSpokenKo:
+from .corpus import Corpus
+
+class CorpusSpokenKo(Corpus):
     """ 구어 말뭉치 (국립국어원 모두의 말뭉치)
         Args:
             :complete_conversation: 완전한 대화 데이터만 보존
     """
-    def __init__(self, root_dir=None, complete_conversation=True):
+    def __init__(self, root=None, name='nikl_spoken', complete_conversation=True):
+        super().__init__(name)
+        self.root = root
         self.complete_conversation = complete_conversation
 
-        self.text = self.load(root_dir)
-
-    def __len__(self):
-        return len(self.text)
-
-    def __getitem__(self, i):
-        return self.text[i]
-
-    def load(self, root_dir):
-        file_paths = sorted(list(Path(root_dir).glob('*.json')))
-        text = []
+        self.corpus = self.load(root)
+    
+    def load(self, root):
+        file_paths = sorted(list(Path(root).glob('*.json')))
+        corpus = []
 
         for path in file_paths:
             try:
@@ -61,9 +59,22 @@ class CorpusSpokenKo:
                 else:
                     # conversation을 데이터셋에 추가
                     conversation.append(buffer)
-                    text.append(conversation)
+                    corpus.append(conversation)
             except:
                 print(f'[Erorr] in {path}, skip it.')
                 continue
 
-        return text
+        return corpus
+
+    def save(self, fname=None):
+        fname = f'{self.name}.txt' if fname is None else fname
+        path = Path(self.root).parent / fname
+
+        with open(path, 'w') as writer:
+            for conversation in self.corpus:
+                try:
+                    for ut in conversation:
+                        writer.write(ut.strip()+'\n')
+                    writer.write('\n')
+                except:
+                    continue
