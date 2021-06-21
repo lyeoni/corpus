@@ -20,6 +20,10 @@ corpus.save() # Save corpus to root directory.
 ```
 
 ## Details
+<<<<<<< HEAD
+=======
+
+>>>>>>> 035daa8172aa96e20c44be32dfa3d3f664680b35
 ### 문어 말뭉치 (CorpusWrittenKo)
 **책**, 잡지, 보고서 등 저작물 20,188종의 문어 원시 말뭉치
 - 책 : 상상 4,946종 (24.50%) / 정보 14,757종 (73.10)
